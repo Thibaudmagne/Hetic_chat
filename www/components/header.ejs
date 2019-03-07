@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>HETIC awesome chat</title>
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic"> 
+        <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css"> 
+        <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+    </head>
+    <body>
+        <header>
+            <h1>HETIC awesome chat : <%= title %></h1>
+            <nav>
+                <ul>
+                    <li><a href="/">Accueil</a></li>
+                    
+                    <% if( connected === false ){ %>
+                        <li><a href="/register">Inscription</a></li>
+                        <li><a href="/login">Connexion</a></li>
+                    <% } %>
+
+                    <% if( connected ) { %>
+                        <li><a href="/chat">Chatroom</a></li>
+                    <% } %>
+                </ul>
+            </nav>
+        </header>
