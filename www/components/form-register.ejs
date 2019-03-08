@@ -24,48 +24,47 @@
     <button type="submit">Inscription</button>
 </form>
 
+
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 <script>
-
     document.addEventListener('DOMContentLoaded', () => {
-
         // Variables
         const email = document.querySelector('#email');
         const pseudo = document.querySelector('#pseudo');
         const password = document.querySelector('#password');
         const passwordSecure = document.querySelector('#password-secure');
         const conditions = document.querySelector('#conditions');
-
         // Capter la soumissionn du formulaire
         document.querySelector('form').addEventListener('submit', (event) => {
             // Bloquer le comportement naturel du formulaire
             event.preventDefault();
-
             // Variable 
             let formError = 0;
-
             // Vérifier les champs du formulaire
             if( email.value.length <= 4 ) formError++;
             if( pseudo.value.length <= 1 ) formError++;
             if( password.value.length <= 4 ) formError++;
             if( password.value !== passwordSecure.value  ) formError++;
             if( !conditions ) formError++;
-
             // Validation finale
             if( formError === 0 ){
                 let form = new FormData(document.querySelector('#form'));
-                console.log(form)
-                // Requête Fetch sur l'API
-                fetch('/api/register', {
-                    method: 'POST',
-                    body: JSON.stringify({email: email.value, password: password.value, pseudo: pseudo.value}),
-                    headers: {'Accept': 'application/json' , 'Content-Type': 'application/json' }
+                // Ajouter un document dans la base PouchDB
+                innerDBuser.put({
+                    _id: makeid(),
+                    email: email.value,
+                    password: password.value,
+                    pseudo: pseudo.value
+                }, ( err, data )=> {
+                    if(err){
+                        console.error(err);
+                    }
+                    else{
+                        console.log(data);
+                    };
                 })
-                .then( rawData => rawData.json() )
-                .then( jsonData => console.log(jsonData) )
-                .catch( err => console.error(err))
+                
             };
-
         });
     });
-
 </script>
